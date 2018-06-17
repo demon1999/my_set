@@ -380,12 +380,13 @@ my_set<T>::my_set() {
 
 template<typename T>
 my_set<T>::my_set(my_set const &other) {
-    finish.l = &start;
-    finish.is_end = true;
-    start.is_beg = true;
-    start.par = &finish;
+    auto a = my_set<T>();
+    a.finish.l = &a.start;
+    a.finish.is_end = true;
+    a.start.is_beg = true;
+    a.start.par = &a.finish;
     std::queue<std::pair<node*, const node*> > data;
-    data.push({rend().we, &other.start});
+    data.push({a.rend().we, &other.start});
     while (!data.empty()) {
         auto v = data.front();
         data.pop();
@@ -404,6 +405,8 @@ my_set<T>::my_set(my_set const &other) {
             data.push({nw, rch});
         }
     }
+    a.swap(*this);
+    return *this;
 }
 
 template<typename T>
