@@ -536,3 +536,19 @@ TEST(correctness, erase_root) {
         }
     }
 }
+
+TEST(correctness, copy_ctor) {
+    my_set<int> a, b;
+    mass_push_back(a, {1, 2, 3, 4});
+    b = a;
+    for (auto v = a.begin(); v != a.end(); v++) {
+        if (b.find(*v) == b.end()) {
+            assert(0);
+        }
+    }
+    for (auto v = b.begin(); v != b.end(); v++) {
+        if (a.find(*v) == a.end()) {
+            assert(0);
+        }
+    }
+}

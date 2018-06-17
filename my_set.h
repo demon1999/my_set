@@ -423,8 +423,9 @@ my_set<T> &my_set<T>::operator=(my_set const &other) {
 
 template<typename T>
 void my_set<T>::clear() {
-    std::queue<node*> data;
-    data.push(start.r);
+    std::queue<node*> data
+    if (start.r != NULL);
+        data.push(start.r);
     while (!data.empty()) {
         auto v = data.front();
         data.pop();
@@ -434,6 +435,7 @@ void my_set<T>::clear() {
             delete v;
         }
     }
+
     start.r = NULL;
 }
 
