@@ -75,7 +75,8 @@ private:
     };
 
 public:
-    struct const_iterator;
+    struct my_const_iterator;
+    typedef my_const_iterator const_iterator;
     struct iterator : public std::iterator<
             std::bidirectional_iterator_tag,   // iterator_category
             T,                      // value_type
@@ -138,10 +139,10 @@ public:
             return a;
         }
         friend struct my_set<T>;
-        friend struct const_iterator;
+        friend struct my_const_iterator;
     };
 
-    struct const_iterator : private std::iterator<
+    struct my_const_iterator : public std::iterator<
             std::bidirectional_iterator_tag,   // iterator_category
             T,                      // value_type
             long,                      // difference_type
@@ -150,23 +151,23 @@ public:
     >{
     private:
         const node* we;
-        const_iterator(const node *a) {
+        my_const_iterator(const node *a) {
             we = a;
         }
     public:
-        const_iterator(const iterator & other) {
+        my_const_iterator(const iterator & other) {
             we = other.we;
         }
-        bool operator==(const const_iterator & other) {
+        bool operator==(const my_const_iterator & other) {
             return we == other.we;
         }
-        bool operator==(const const_iterator & other) const {
+        bool operator==(const my_const_iterator & other) const {
             return we == other.we;
         }
-        bool operator!=(const const_iterator & other) {
+        bool operator!=(const my_const_iterator & other) {
             return we != other.we;
         }
-        bool operator!=(const const_iterator & other) const{
+        bool operator!=(const my_const_iterator & other) const{
             return we != other.we;
         }
         const T& operator*() {
@@ -176,24 +177,24 @@ public:
             return we->data;
         }
 
-        const_iterator &operator--() {
+        my_const_iterator &operator--() {
             we = we->prev_node();
             return *this;
         }
 
-        const_iterator operator--(int) {
-            const_iterator a = we;
+        my_const_iterator operator--(int) {
+            my_const_iterator a = we;
             --(*this);
             return a;
         }
 
-        const_iterator &operator++() {
+        my_const_iterator &operator++() {
             we = we->next_node();
             return *this;
         }
 
-        const_iterator operator++(int) {
-            const_iterator a = we;
+        my_const_iterator operator++(int) {
+            my_const_iterator a = we;
             ++(*this);
             return a;
         }
@@ -289,7 +290,7 @@ public:
         friend struct const_reverse_iterator;
     };
 
-    struct const_reverse_iterator : private std::iterator<
+    struct const_reverse_iterator : public std::iterator<
             std::bidirectional_iterator_tag,   // iterator_category
             T,                      // value_type
             long,                      // difference_type
