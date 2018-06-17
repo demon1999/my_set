@@ -271,7 +271,7 @@ public:
     >{
     private:
         const node* we;
-        const_reverse_iterator(node *a) {
+        const_reverse_iterator(const node *a) {
             we = a;
         }
     public:

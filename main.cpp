@@ -1,12 +1,13 @@
 #include <iostream>
 #include "my_set.h"
 int main() {
-    my_set<int> a, b;
-    a.insert(5);
-    my_set<int>::iterator const i = a.find(5);
-    std::cout << (*i) << "\n";
+    //my_set<int> a, b;
+    //a.insert(5);
+    //my_set<int>::iterator const i = a.find(5);
+    const my_set<int> a;
+    a.rbegin();
     //const rbegin() rend()
-    a.insert(-1);
+    /*a.insert(-1);
     auto q = a.begin();
     std::next(q);
     b.insert(-2);
@@ -32,6 +33,6 @@ int main() {
             std::cout << (*v) << " ";
         }
         std::cout << "\n";
-    }
+    }*/
     return 0;
 }
