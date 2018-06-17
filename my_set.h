@@ -184,12 +184,14 @@ public:
         }
 
         const_iterator &operator++() {
-            const_iterator a = we;
-            --(*this);
-            return a;
+            we = we->next_node();
+            return *this;
         }
 
         const_iterator operator++(int) {
+            const_iterator a = we;
+            ++(*this);
+            return a;
         }
         friend struct my_set<T>;
         friend struct iterator;
@@ -223,7 +225,167 @@ public:
     }
 
     const_iterator cend() const {
-        return (const_iterator(&finish)--)++;
+        return ++(--const_iterator(&finish));
+    }
+
+    struct const_reverse_iterator;
+    struct reverse_iterator : public std::iterator<
+            std::bidirectional_iterator_tag,   // iterator_category
+            T,                      // value_type
+            long,                      // difference_type
+            T*,               // pointer
+            T&                       // reference
+    > {
+    private:
+        node* we;
+        reverse_iterator(node *a) {
+            we = a;
+        }
+    public:
+        reverse_iterator(const const_reverse_iterator & other) {
+            we = other.we;
+        }
+        bool operator==(const reverse_iterator & other) {
+            return we == other.we;
+        }
+        bool operator==(const const_reverse_iterator & other) {
+            return const_reverse_iterator(we) == other.we;
+        }
+        bool operator==(const reverse_iterator & other) const {
+            return we == other.we;
+        }
+        bool operator==(const const_reverse_iterator & other) const {
+            return const_reverse_iterator(we) == other.we;
+        }
+        bool operator!=(const const_iterator & other) {
+            return const_reverse_iterator(we) == other.we;
+        }
+        bool operator!=(const reverse_iterator & other) {
+            return we != other.we;
+        }
+        bool operator!=(const const_reverse_iterator & other) const {
+            return const_reverse_iterator(we) == other.we;
+        }
+        bool operator!=(const reverse_iterator & other) const {
+            return we != other.we;
+        }
+        T& operator*() {
+            return *(we->data);
+        }
+        T* operator->() {
+            return we->data;
+        }
+        reverse_iterator &operator++() {
+            we = we->prev_node();
+            return *this;
+        }
+        reverse_iterator operator++(int) {
+            reverse_iterator a = we;
+            ++(*this);
+            return a;
+        }
+        reverse_iterator &operator--() {
+            we = we->next_node();
+            return *this;
+        }
+        reverse_iterator operator--(int) {
+            reverse_iterator a = we;
+            --(*this);
+            return a;
+        }
+        friend struct my_set<T>;
+        friend struct const_reverse_iterator;
+    };
+
+    struct const_reverse_iterator : public std::iterator<
+            std::bidirectional_iterator_tag,   // iterator_category
+            T,                      // value_type
+            long,                      // difference_type
+            const T*,               // pointer
+            const T&                       // reference
+    >{
+    private:
+        node* we;
+        const_reverse_iterator(node *a) {
+            we = a;
+        }
+    public:
+        const_reverse_iterator(const reverse_iterator & other) {
+            we = other.we;
+        }
+        bool operator==(const const_reverse_iterator & other) {
+            return we == other.we;
+        }
+        bool operator==(const const_reverse_iterator & other) const {
+            return we == other.we;
+        }
+        bool operator!=(const const_reverse_iterator & other) {
+            return we != other.we;
+        }
+        bool operator!=(const const_reverse_iterator & other) const{
+            return we != other.we;
+        }
+        const T& operator*() {
+            return *(we->data);
+        }
+        const T* operator->() {
+            return we->data;
+        }
+
+        const_reverse_iterator &operator--() {
+            we = we->next_node();
+            return *this;
+        }
+
+        const_reverse_iterator operator--(int) {
+            const_reverse_iterator a = we;
+            --(*this);
+            return a;
+        }
+
+        const_reverse_iterator &operator++() {
+            we = we->prev_node();
+            return *this;
+        }
+
+        const_reverse_iterator operator++(int) {
+            const_reverse_iterator a = we;
+            ++(*this);
+            return a;
+
+        }
+        friend struct my_set<T>;
+        friend struct reverse_iterator;
+    };
+    reverse_iterator rbegin() {
+        return --reverse_iterator(&finish);
+    }
+    reverse_iterator rend() {
+        return &start;
+    }
+
+    const_reverse_iterator rbegin() const {
+        return --const_reverse_iterator(&finish);
+    }
+
+    const_reverse_iterator rend() const {
+        return --(++const_reverse_iterator(&start));
+    }
+
+    const_reverse_iterator crbegin() {
+        return --const_reverse_iterator(&finish);
+    }
+
+    const_reverse_iterator crend() {
+        return &start;
+    }
+
+    const_reverse_iterator crbegin() const {
+        return --const_reverse_iterator(&finish);
+    }
+
+    const_reverse_iterator crend() const {
+        return --(++const_reverse_iterator(&start));
     }
 
     const_iterator find(T const& a);
@@ -368,7 +530,7 @@ template<typename T>
 std::pair<typename my_set<T>::iterator, bool> my_set<T>::insert(const T &a) {
     const_iterator we = lower_bound(a);
     if (we != (&finish)) {
-        if ((we->data) == a) {
+        if ((*we) == a) {
             return {we, false};
         } else {
             auto nw = new node(a);
