@@ -417,6 +417,8 @@ template<typename T>
 my_set<T> &my_set<T>::operator=(my_set const &other) {
     if (this != &other) {
         my_set<T>(other).swap(*this);
+        start.par = &finish;
+        finish.l = &start;
     }
     return *this;
 }
