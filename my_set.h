@@ -556,7 +556,7 @@ typename my_set<T>::iterator my_set<T>::erase(my_set::const_iterator we) {
 
 template<typename T>
 typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
-    if (we.we == end()) {
+    if (iterator(we.we) == end()) {
         return we;
     }
     auto ans = we;
@@ -592,7 +592,7 @@ typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
 
 template<typename T>
 typename my_set<T>::iterator my_set<T>::lower_bound(const T &a) {
-    return const_cast<node*>(((const_cast<const my_set*>(this))->lower_bound()).we);
+    return const_cast<node*>(((const_cast<const my_set*>(this))->lower_bound(a)).we);
 }
 
 
