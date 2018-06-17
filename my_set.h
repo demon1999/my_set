@@ -425,21 +425,21 @@ my_set<T>::my_set(my_set const &other) {
     finish.is_end = true;
     start.is_beg = true;
     start.par = &finish;
-    std::queue<std::pair<node*, node*> > data;
-    data.push({&start, &(other.start)});
+    std::queue<std::pair<node*, const node*> > data;
+    data.push({rend().we, &other.start});
     while (!data.empty()) {
         auto v = data.front();
         data.pop();
         if (((v.second)->l) != NULL) {
             node* lch = (v.second)->l;
-            node* nw = new node(lch->data);
+            node* nw = new node(*(lch->data));
             v.first->l = nw;
             nw->par = v.first;
             data.push({nw, lch});
         }
         if (((v.second)->r) != NULL) {
             node* rch = (v.second)->r;
-            node* nw = new node(rch->data);
+            node* nw = new node(*(rch->data));
             v.first->r = nw;
             nw->par = v.first;
             data.push({nw, rch});
