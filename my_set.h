@@ -141,7 +141,7 @@ public:
         friend struct const_iterator;
     };
 
-    struct const_iterator : public std::iterator<
+    struct const_iterator : private std::iterator<
             std::bidirectional_iterator_tag,   // iterator_category
             T,                      // value_type
             long,                      // difference_type
@@ -289,7 +289,7 @@ public:
         friend struct const_reverse_iterator;
     };
 
-    struct const_reverse_iterator : public std::iterator<
+    struct const_reverse_iterator : private std::iterator<
             std::bidirectional_iterator_tag,   // iterator_category
             T,                      // value_type
             long,                      // difference_type
@@ -468,7 +468,7 @@ void my_set<T>::clear() {
 
 template<typename T>
 bool my_set<T>::empty() const {
-    return start.r != NULL;
+    return start.r == NULL;
 }
 
 template<typename T>
