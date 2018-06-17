@@ -392,8 +392,13 @@ public:
     const_iterator lower_bound(T const& a);
     const_iterator upper_bound(T const& a);
     void swap(my_set & a) {
-        std::swap(start, a.start);
-        std::swap(finish, a.finish);
+        node* rr = start.r;
+        start.r = a.start.r;
+        a.start.r = rr;
+        if (start.r != NULL)
+            start.r->par = (&start);
+        if (a.start.r != NULL)
+            a.start.r->par = (&start);
     }
 
     void clear();
@@ -473,6 +478,7 @@ void my_set<T>::clear() {
             delete v;
         }
     }
+    start.r = NULL;
 }
 
 template<typename T>
