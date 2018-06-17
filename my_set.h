@@ -34,13 +34,13 @@ private:
                 delete data;
         }
         const node* prev_node() const {
-            node* we = this;
+            const node* we = this;
             if (we->l != NULL) {
                 we = we->l;
                 while (we->r != NULL)
                     we = we->r;
             } else {
-                node* prev = we;
+                const node* prev = we;
                 we = we->par;
                 while (we != NULL && (we->l) == prev) {
                     prev = we;
@@ -51,13 +51,13 @@ private:
         };
 
         const node* next_node() const {
-            node* we = this;
+            const node* we = this;
             if (we->r != NULL) {
                 we = we->r;
                 while (we->l != NULL)
                     we = we->l;
             } else {
-                node* prev = we;
+                const node* prev = we;
                 we = we->par;
                 while (we != NULL && (we->r) == prev) {
                     prev = we;
