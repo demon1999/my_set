@@ -149,7 +149,7 @@ public:
             const T&                       // reference
     >{
     private:
-        node* we;
+        const node* we;
         const_iterator(node *a) {
             we = a;
         }
