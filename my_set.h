@@ -482,10 +482,10 @@ template<typename T>
 typename my_set<T>::const_iterator my_set<T>::find(const T &a) {
     node* go = start.r;
     while (go != NULL) {
-        if ((go->data) == a) {
+        if ((go->data) != NULL && (*(go->data)) == a) {
             return const_iterator(go);
         }
-        if ((go->data) > a)
+        if ((go->data) != NULL && (*(go->data)) > a)
             go = go->l;
         else
             go = go->r;
@@ -499,7 +499,7 @@ typename my_set<T>::const_iterator my_set<T>::upper_bound(const T &a) {
         return const_iterator(&finish);
     node* go = start.r;
     while (go != NULL) {
-        if ((go->data) > a) {
+        if ((go->data) != NULL && (*(go->data)) > a) {
             if ((go->l) == NULL) {
                 break;
             }
@@ -513,7 +513,7 @@ typename my_set<T>::const_iterator my_set<T>::upper_bound(const T &a) {
         }
     }
     const_iterator we = go;
-    if ((go->data) <= a)
+    if ((go->data) != NULL && (*(go->data)) <= a)
         we++;
     return we;
 }
@@ -535,17 +535,17 @@ std::pair<typename my_set<T>::iterator, bool> my_set<T>::insert(const T &a) {
         } else {
             auto nw = new node(a);
             nw->par = (we.we);
-            nw->l = (we->l);
+            nw->l = (we.we->l);
             if ((nw->l) != NULL) {
                 (nw->l)->par = nw;
             }
-            we->l = nw;
+            we.we->l = nw;
             return {nw, true};
         }
     } else {
         auto nw = new node(a);
         we--;
-        we->r = nw;
+        we.we->r = nw;
         nw->par = we.we;
         return {nw, true};
     }
