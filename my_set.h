@@ -406,6 +406,8 @@ my_set<T>::my_set(my_set const &other) {
         }
     }
     a.swap(*this);
+    start.par = &finish;
+    finish.l = &start;
 }
 
 template<typename T>
