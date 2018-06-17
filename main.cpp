@@ -3,10 +3,17 @@
 int main() {
     my_set<int> a, b;
     a.insert(-1);
+    auto q = a.begin();
+    std::next(q);
     b.insert(-2);
     swap(a, b);
     for (auto v = a.begin(); v!= a.end(); v++) {
         std::cout << (*v) << std::endl;
+    }
+    auto v = a.find(-1);
+    if (v == a.end()) {
+        std::cout << "KHEEE\n";
+        return 0;
     }
     for (int i = 0; i < 10; i++) {
         a.insert(i);

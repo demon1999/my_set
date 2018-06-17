@@ -33,7 +33,7 @@ private:
             if (data != NULL)
                 delete data;
         }
-        node* prev_node() {
+        const node* prev_node() {
             node* we = this;
             if (we->l != NULL) {
                 we = we->l;
@@ -50,7 +50,7 @@ private:
             return we;
         };
 
-        node* next_node() {
+        const node* next_node() {
             node* we = this;
             if (we->r != NULL) {
                 we = we->r;
@@ -82,9 +82,6 @@ public:
             we = a;
         }
     public:
-        iterator(const const_iterator & other) {
-            we = other.we;
-        }
         bool operator==(const iterator & other) {
             return we == other.we;
         }
@@ -145,7 +142,7 @@ public:
             const T&                       // reference
     >{
     private:
-        node* we;
+        const node* we;
         const_iterator(node *a) {
             we = a;
         }
@@ -194,7 +191,6 @@ public:
             return a;
         }
         friend struct my_set<T>;
-        friend struct iterator;
     };
 
     iterator begin() {
@@ -242,9 +238,6 @@ public:
             we = a;
         }
     public:
-        reverse_iterator(const const_reverse_iterator & other) {
-            we = other.we;
-        }
         bool operator==(const reverse_iterator & other) {
             return we == other.we;
         }
@@ -305,7 +298,7 @@ public:
             const T&                       // reference
     >{
     private:
-        node* we;
+        const node* we;
         const_reverse_iterator(node *a) {
             we = a;
         }
@@ -355,7 +348,6 @@ public:
 
         }
         friend struct my_set<T>;
-        friend struct reverse_iterator;
     };
     reverse_iterator rbegin() {
         return (&finish)->prev_node();
@@ -408,7 +400,7 @@ private:
     iterator extract(iterator we);
 public:
     std::pair<iterator, bool> insert(T const& a);
-    bool is_empty() const;
+    bool empty() const;
     my_set();
     my_set(my_set const &other);
     ~my_set();
@@ -483,7 +475,7 @@ void my_set<T>::clear() {
 }
 
 template<typename T>
-bool my_set<T>::is_empty() const {
+bool my_set<T>::empty() const {
     return start.r != NULL;
 }
 
