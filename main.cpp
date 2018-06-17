@@ -2,6 +2,10 @@
 #include "my_set.h"
 int main() {
     my_set<int> a, b;
+    a.insert(5);
+    my_set<int>::iterator const i = a.find(5);
+    std::cout << (*i) << "\n";
+    //const rbegin() rend()
     a.insert(-1);
     auto q = a.begin();
     std::next(q);

@@ -92,23 +92,11 @@ public:
             we = a;
         }
     public:
-        bool operator==(const iterator & other) {
-            return we == other.we;
-        }
-        bool operator==(const const_iterator & other) {
-            return const_iterator(we) == other.we;
-        }
         bool operator==(const iterator & other) const {
             return we == other.we;
         }
         bool operator==(const const_iterator & other) const {
             return const_iterator(we) == other.we;
-        }
-        bool operator!=(const const_iterator & other) {
-            return const_iterator(we) != other.we;
-        }
-        bool operator!=(const iterator & other) {
-            return we != other.we;
         }
         bool operator!=(const const_iterator & other) const {
             return const_iterator(we) != other.we;
@@ -116,10 +104,10 @@ public:
         bool operator!=(const iterator & other) const {
             return we != other.we;
         }
-        T& operator*() {
+        T& operator*() const {
             return *(we->data);
         }
-        T* operator->() {
+        T* operator->() const {
             return we->data;
         }
         iterator &operator++() {
@@ -160,22 +148,16 @@ public:
         my_const_iterator(const iterator & other) {
             we = other.we;
         }
-        bool operator==(const my_const_iterator & other) {
-            return we == other.we;
-        }
         bool operator==(const my_const_iterator & other) const {
             return we == other.we;
-        }
-        bool operator!=(const my_const_iterator & other) {
-            return we != other.we;
         }
         bool operator!=(const my_const_iterator & other) const{
             return we != other.we;
         }
-        const T& operator*() {
+        const T& operator*() const {
             return *(we->data);
         }
-        const T* operator->() {
+        const T* operator->() const {
             return we->data;
         }
 
@@ -240,23 +222,11 @@ public:
             we = a;
         }
     public:
-        bool operator==(const reverse_iterator & other) {
-            return we == other.we;
-        }
-        bool operator==(const const_reverse_iterator & other) {
-            return const_reverse_iterator(we) == other.we;
-        }
         bool operator==(const reverse_iterator & other) const {
             return we == other.we;
         }
         bool operator==(const const_reverse_iterator & other) const {
             return const_reverse_iterator(we) == other.we;
-        }
-        bool operator!=(const const_iterator & other) {
-            return const_reverse_iterator(we) != other.we;
-        }
-        bool operator!=(const reverse_iterator & other) {
-            return we != other.we;
         }
         bool operator!=(const const_reverse_iterator & other) const {
             return const_reverse_iterator(we) != other.we;
@@ -264,10 +234,10 @@ public:
         bool operator!=(const reverse_iterator & other) const {
             return we != other.we;
         }
-        T& operator*() {
+        T& operator*() const {
             return *(we->data);
         }
-        T* operator->() {
+        T* operator->() const {
             return we->data;
         }
         reverse_iterator &operator++() {
@@ -308,22 +278,16 @@ public:
         const_reverse_iterator(const reverse_iterator & other) {
             we = other.we;
         }
-        bool operator==(const const_reverse_iterator & other) {
-            return we == other.we;
-        }
         bool operator==(const const_reverse_iterator & other) const {
             return we == other.we;
-        }
-        bool operator!=(const const_reverse_iterator & other) {
-            return we != other.we;
         }
         bool operator!=(const const_reverse_iterator & other) const{
             return we != other.we;
         }
-        const T& operator*() {
+        const T& operator*() const {
             return *(we->data);
         }
-        const T* operator->() {
+        const T* operator->() const {
             return we->data;
         }
 
@@ -375,9 +339,11 @@ public:
     }
 
     const_iterator find(T const& a) const;
+    iterator find(T const& a);
     const_iterator lower_bound(T const& a) const;
     iterator lower_bound(T const& a);
     const_iterator upper_bound(T const& a) const;
+    iterator upper_bound(T const& a);
     void swap(my_set & a) {
         if (this == &a) return;
         node* rr = start.r;
@@ -598,6 +564,15 @@ typename my_set<T>::iterator my_set<T>::lower_bound(const T &a) {
     return const_cast<node*>(((const_cast<const my_set*>(this))->lower_bound(a)).we);
 }
 
+template<typename T>
+typename my_set<T>::iterator my_set<T>::upper_bound(const T &a) {
+    return const_cast<node*>(((const_cast<const my_set*>(this))->upper_bound(a)).we);
+}
+
+template<typename T>
+typename my_set<T>::iterator my_set<T>::find(const T &a) {
+    return const_cast<node*>(((const_cast<const my_set*>(this))->find(a)).we);
+}
 
 template<typename T>
 void swap(my_set<T>& a, my_set<T>& b) {

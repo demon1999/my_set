@@ -9,12 +9,13 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address,undefined
 #set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 add_executable(main
-        #main.cpp)
-        testing.cpp
-        my_set.h
-        gtest/gtest-all.cc
-        gtest/gtest.h
-        gtest/gtest_main.cc)
+        main.cpp
+        my_set.h)
+        #testing.cpp
+        #my_set.h
+        #gtest/gtest-all.cc
+        #gtest/gtest.h
+        #gtest/gtest_main.cc)
 
 include_directories(${CMAKE_SOURCE_DIR})
 target_link_libraries(main -lpthread)
