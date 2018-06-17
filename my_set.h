@@ -44,6 +44,7 @@ private:
                 we = we->par;
                 while (we != NULL && (we->l) == prev) {
                     prev = we;
+                    if ((we->par) == NULL) return we;
                     we = we->par;
                 }
             }
@@ -64,6 +65,7 @@ private:
                 we = we->par;
                 while (we != NULL && (we->r) == prev) {
                     prev = we;
+                    if ((we->par) == NULL) return we;
                     we = we->par;
                 }
             }
