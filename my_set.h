@@ -387,9 +387,10 @@ public:
         return const_reverse_iterator(&start);
     }
 
-    const_iterator find(T const& a);
-    const_iterator lower_bound(T const& a);
-    const_iterator upper_bound(T const& a);
+    const_iterator find(T const& a) const;
+    const_iterator lower_bound(T const& a) const;
+    iterator lower_bound(T const& a);
+    const_iterator upper_bound(T const& a) const;
     void swap(my_set & a) {
         if (this == &a) return;
         node* rr = start.r;
@@ -487,7 +488,7 @@ bool my_set<T>::empty() const {
 }
 
 template<typename T>
-typename my_set<T>::const_iterator my_set<T>::find(const T &a) {
+typename my_set<T>::const_iterator my_set<T>::find(const T &a) const {
     node* go = start.r;
     while (go != NULL) {
         if ((go->data) != NULL && (*(go->data)) == a) {
@@ -502,7 +503,7 @@ typename my_set<T>::const_iterator my_set<T>::find(const T &a) {
 }
 
 template<typename T>
-typename my_set<T>::const_iterator my_set<T>::upper_bound(const T &a) {
+typename my_set<T>::const_iterator my_set<T>::upper_bound(const T &a) const {
     if (start.r == NULL)
         return const_iterator(&finish);
     node* go = start.r;
@@ -527,7 +528,7 @@ typename my_set<T>::const_iterator my_set<T>::upper_bound(const T &a) {
 }
 
 template<typename T>
-typename my_set<T>::const_iterator my_set<T>::lower_bound(const T &a) {
+typename my_set<T>::const_iterator my_set<T>::lower_bound(const T &a) const {
     if ((find(a)) != &finish) {
         return find(a);
     } else
@@ -536,8 +537,8 @@ typename my_set<T>::const_iterator my_set<T>::lower_bound(const T &a) {
 
 template<typename T>
 std::pair<typename my_set<T>::iterator, bool> my_set<T>::insert(const T &a) {
-    const_iterator we = lower_bound(a);
-    if (we != (&finish)) {
+    iterator we = lower_bound(a);
+    if (we != iterator(&finish)) {
         if ((*we) == a) {
             return {we, false};
         } else {
@@ -603,6 +604,11 @@ typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
         nk.we->r = (we.we->r);
     }
     return we;
+}
+
+template<typename T>
+typename my_set<T>::iterator my_set<T>::lower_bound(const T &a) {
+    return const_cast<node*>(((const_cast<const my_set<T>*>(this))->lower_bound()).we);
 }
 
 
