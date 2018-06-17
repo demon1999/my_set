@@ -519,3 +519,20 @@ TEST(correctness, const_iterators_postfix)
     EXPECT_EQ(3, *i);
     EXPECT_TRUE(j == s.end());
 }
+
+TEST(correctness, erase_root) {
+    my_set<int> a, b;
+    mass_push_back(a, {5, 3, 8, 1, 2});
+    a.erase(a.find(5));
+    mass_push_back(b, {3, 8, 1, 2});
+    for (auto v = a.begin(); v != a.end(); v++) {
+        if (b.find(*v) == b.end()) {
+            assert(0);
+        }
+    }
+    for (auto v = b.begin(); v != b.end(); v++) {
+        if (a.find(*v) == a.end()) {
+            assert(0);
+        }
+    }
+}

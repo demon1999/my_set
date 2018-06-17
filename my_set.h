@@ -554,7 +554,13 @@ typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
         } else
             ((we.we->par)->r) = nk.we;
         nk.we->l = (we.we->l);
+        if ((we.we->l) != NULL) {
+            ((we.we->l)->par) = nk.we;
+        }
         nk.we->r = (we.we->r);
+        if ((we.we->r) != NULL) {
+            ((we.we->r)->par) = nk.we;
+        }
     }
     return we;
 }
