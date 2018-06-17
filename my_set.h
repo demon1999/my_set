@@ -399,7 +399,7 @@ public:
         if (start.r != NULL)
             start.r->par = (&start);
         if (a.start.r != NULL)
-            a.start.r->par = (&start);
+            a.start.r->par = (&a.start);
     }
 
     void clear();
