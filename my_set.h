@@ -392,6 +392,7 @@ public:
     const_iterator lower_bound(T const& a);
     const_iterator upper_bound(T const& a);
     void swap(my_set & a) {
+        if (this != &a) return;
         node* rr = start.r;
         start.r = a.start.r;
         a.start.r = rr;
