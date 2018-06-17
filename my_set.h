@@ -358,22 +358,22 @@ public:
         friend struct reverse_iterator;
     };
     reverse_iterator rbegin() {
-        return --reverse_iterator(&finish);
+        return (&finish)->prev_node();
     }
     reverse_iterator rend() {
         return &start;
     }
 
     const_reverse_iterator rbegin() const {
-        return --const_reverse_iterator(&finish);
+        return (&finish)->prev_node();
     }
 
     const_reverse_iterator rend() const {
-        return --(++const_reverse_iterator(&start));
+        return const_reverse_iterator(&start);
     }
 
     const_reverse_iterator crbegin() {
-        return --const_reverse_iterator(&finish);
+        return (&finish)->prev_node();
     }
 
     const_reverse_iterator crend() {
@@ -381,11 +381,11 @@ public:
     }
 
     const_reverse_iterator crbegin() const {
-        return --const_reverse_iterator(&finish);
+        return (&finish)->prev_node();
     }
 
     const_reverse_iterator crend() const {
-        return --(++const_reverse_iterator(&start));
+        return const_reverse_iterator(&start);
     }
 
     const_iterator find(T const& a);
