@@ -50,6 +50,9 @@ private:
             return we;
         };
 
+        const node* prev_node() {
+            return const_cast<node*>((const_cast<const node*>(this))->prev_node());
+        };
         const node* next_node() const {
             const node* we = this;
             if (we->r != NULL) {
@@ -66,7 +69,11 @@ private:
             }
             return we;
         }
+        const node* next_node() {
+            return const_cast<node*>((const_cast<const node*>(this))->next_node());
+        };
     };
+
 public:
     struct const_iterator;
     struct iterator : public std::iterator<
