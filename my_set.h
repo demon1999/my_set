@@ -50,7 +50,7 @@ private:
             return we;
         };
 
-        const node* prev_node() {
+        node* prev_node() {
             return const_cast<node*>((const_cast<const node*>(this))->prev_node());
         };
         const node* next_node() const {
@@ -69,7 +69,7 @@ private:
             }
             return we;
         }
-        const node* next_node() {
+        node* next_node() {
             return const_cast<node*>((const_cast<const node*>(this))->next_node());
         };
     };
@@ -150,7 +150,7 @@ public:
     >{
     private:
         const node* we;
-        const_iterator(node *a) {
+        const_iterator(const node *a) {
             we = a;
         }
     public:
@@ -212,14 +212,6 @@ public:
     }
 
     const_iterator end() const {
-        return (const_iterator(&finish)--)++;
-    }
-
-    const_iterator cbegin() {
-        return ++const_iterator(&start);
-    }
-
-    const_iterator cend() {
         return &finish;
     }
 
@@ -228,7 +220,7 @@ public:
     }
 
     const_iterator cend() const {
-        return ++(--const_iterator(&finish));
+        return &finish;
     }
 
     struct const_reverse_iterator;
@@ -368,14 +360,6 @@ public:
     }
 
     const_reverse_iterator rend() const {
-        return const_reverse_iterator(&start);
-    }
-
-    const_reverse_iterator crbegin() {
-        return (&finish)->prev_node();
-    }
-
-    const_reverse_iterator crend() {
         return &start;
     }
 
@@ -562,17 +546,17 @@ std::pair<typename my_set<T>::iterator, bool> my_set<T>::insert(const T &a) {
 
 template<typename T>
 typename my_set<T>::iterator my_set<T>::erase(my_set::const_iterator we) {
-    if (we == (&finish))
-        return we;
-    auto me = extract(we);
+    if (we == end())
+        return const_cast<node*>(we.we);
+    auto me = extract(const_cast<node*>(we.we));
     auto ans = upper_bound((*(me.we->data)));
     delete me.we;
-    return ans;
+    return const_cast<node*>(ans.we);
 }
 
 template<typename T>
 typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
-    if (we.we == (&finish)) {
+    if (we.we == end()) {
         return we;
     }
     auto ans = we;
@@ -608,7 +592,7 @@ typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
 
 template<typename T>
 typename my_set<T>::iterator my_set<T>::lower_bound(const T &a) {
-    return const_cast<node*>(((const_cast<const my_set<T>*>(this))->lower_bound()).we);
+    return const_cast<node*>(((const_cast<const my_set*>(this))->lower_bound()).we);
 }
 
 
