@@ -33,7 +33,7 @@ private:
             if (data != NULL)
                 delete data;
         }
-        const node* prev_node() {
+        const node* prev_node() const {
             node* we = this;
             if (we->l != NULL) {
                 we = we->l;
@@ -50,7 +50,7 @@ private:
             return we;
         };
 
-        const node* next_node() {
+        const node* next_node() const {
             node* we = this;
             if (we->r != NULL) {
                 we = we->r;
