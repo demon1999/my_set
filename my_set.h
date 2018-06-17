@@ -406,7 +406,6 @@ my_set<T>::my_set(my_set const &other) {
         }
     }
     a.swap(*this);
-    return *this;
 }
 
 template<typename T>
