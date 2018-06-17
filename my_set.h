@@ -17,7 +17,7 @@ private:
         node* l;
         node* r;
         node* par;
-        T* data;
+        const T* data;
         bool is_end, is_beg;
         node() {
             is_beg = is_end = false;
@@ -104,10 +104,10 @@ public:
         bool operator!=(const iterator & other) const {
             return we != other.we;
         }
-        T& operator*() const {
+        const T& operator*() const {
             return *(we->data);
         }
-        T* operator->() const {
+        const T* operator->() const {
             return we->data;
         }
         iterator &operator++() {
@@ -234,10 +234,10 @@ public:
         bool operator!=(const reverse_iterator & other) const {
             return we != other.we;
         }
-        T& operator*() const {
+        const T& operator*() const {
             return *(we->data);
         }
-        T* operator->() const {
+        const T* operator->() const {
             return we->data;
         }
         reverse_iterator &operator++() {
@@ -423,9 +423,9 @@ my_set<T> &my_set<T>::operator=(my_set const &other) {
 
 template<typename T>
 void my_set<T>::clear() {
-    std::queue<node*> data
-    if (start.r != NULL);
-        data.push(start.r);
+    if (!start.r) return;
+    std::queue<node*> data;
+    data.push(start.r);
     while (!data.empty()) {
         auto v = data.front();
         data.pop();
