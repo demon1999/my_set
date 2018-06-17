@@ -10,7 +10,7 @@ int main() {
     for (auto v = a.begin(); v!= a.end(); v++) {
         std::cout << (*v) << std::endl;
     }
-    auto v = a.find(-1);
+    auto v = a.find(-2);
     if (v == a.end()) {
         std::cout << "KHEEE\n";
         return 0;
