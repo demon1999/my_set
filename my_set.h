@@ -398,7 +398,9 @@ public:
 
     void clear();
     iterator erase(const_iterator we);
-    iterator extract(const_iterator we);
+private:
+    iterator extract(iterator we);
+public:
     std::pair<iterator, bool> insert(T const& a);
     bool is_empty() const;
     my_set();
@@ -556,43 +558,43 @@ typename my_set<T>::iterator my_set<T>::erase(my_set::const_iterator we) {
     if (we == (&finish))
         return we;
     auto me = extract(we);
-    auto ans = upper_bound(me->data);
-    delete me;
+    auto ans = upper_bound((*(me.we->data)));
+    delete me.we;
     return ans;
 }
 
 template<typename T>
-typename my_set<T>::iterator my_set<T>::extract(my_set::const_iterator we) {
-    if (we == (&finish)) {
+typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
+    if (we.we == (&finish)) {
         return we;
     }
     auto ans = we;
     ans++;
-    if (we->r == NULL) {
-        auto nw = we->par;
-        if ((nw->l) == we)
-            nw->l = we->l;
+    if (we.we->r == NULL) {
+        auto nw = we.we->par;
+        if ((nw->l) == we.we)
+            nw->l = we.we->l;
         else
-            nw->r = we->l;
-        if (we->l != NULL) {
-            ((we->l)->par) = nw;
+            nw->r = we.we->l;
+        if (we.we->l != NULL) {
+            ((we.we->l)->par) = nw;
         }
-    } else if (we->l == NULL) {
-        auto nw = we->par;
-        if ((nw->l) == we)
-            nw->l = we->r;
+    } else if (we.we->l == NULL) {
+        auto nw = we.we->par;
+        if ((nw->l) == we.we)
+            nw->l = we.we->r;
         else
-            nw->r = we->r;
-        ((we->r)->par) = nw;
+            nw->r = we.we->r;
+        ((we.we->r)->par) = nw;
     } else {
         auto nk = extract(ans);
-        nk->par = we->par;
-        if (((we->par)->l) == we){
-            ((we->par)->l) = nk;
+        nk.we->par = we.we->par;
+        if (((we.we->par)->l) == we.we){
+            ((we.we->par)->l) = nk.we;
         } else
-            ((we->par)->r) = nk;
-        nk->l = (we->l);
-        nk->r = (we->r);
+            ((we.we->par)->r) = nk.we;
+        nk.we->l = (we.we->l);
+        nk.we->r = (we.we->r);
     }
     return we;
 }

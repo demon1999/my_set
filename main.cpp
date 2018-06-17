@@ -4,6 +4,9 @@ int main() {
     my_set<int> a;
     for (int i = 0; i < 10; i++) {
         a.insert(i);
+        if (i % 2) {
+            a.erase(a.find(i));
+        }
         /*for (auto v = a.begin(); v != a.end(); v++)
             std::cout << (*v) << " ";
         std::cout << "\n";*/
