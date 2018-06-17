@@ -102,13 +102,13 @@ public:
             return const_iterator(we) == other.we;
         }
         bool operator!=(const const_iterator & other) {
-            return const_iterator(we) == other.we;
+            return const_iterator(we) != other.we;
         }
         bool operator!=(const iterator & other) {
             return we != other.we;
         }
         bool operator!=(const const_iterator & other) const {
-            return const_iterator(we) == other.we;
+            return const_iterator(we) != other.we;
         }
         bool operator!=(const iterator & other) const {
             return we != other.we;
@@ -250,13 +250,13 @@ public:
             return const_reverse_iterator(we) == other.we;
         }
         bool operator!=(const const_iterator & other) {
-            return const_reverse_iterator(we) == other.we;
+            return const_reverse_iterator(we) != other.we;
         }
         bool operator!=(const reverse_iterator & other) {
             return we != other.we;
         }
         bool operator!=(const const_reverse_iterator & other) const {
-            return const_reverse_iterator(we) == other.we;
+            return const_reverse_iterator(we) != other.we;
         }
         bool operator!=(const reverse_iterator & other) const {
             return we != other.we;
