@@ -5,16 +5,19 @@ int main() {
     a.insert(-1);
     b.insert(-2);
     swap(a, b);
-    /*for (auto v = a.begin(); v!= a.end(); v++) {
+    for (auto v = a.begin(); v!= a.end(); v++) {
         std::cout << (*v) << std::endl;
-    }*/
-
+    }
     for (int i = 0; i < 10; i++) {
         a.insert(i);
-        my_set<int> b = a;
-        if (i % 2) a.clear();
+        //b.insert(i  *10 + 10);
+        //if (i % 2) a.clear();
         swap(a, b);
         for (auto v = b.begin(); v != b.end(); v++) {
+            std::cout << (*v) << " ";
+        }
+        std::cout << "\n";
+        for (auto v = a.begin(); v != a.end(); v++) {
             std::cout << (*v) << " ";
         }
         std::cout << "\n";
