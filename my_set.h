@@ -349,14 +349,14 @@ public:
         friend struct my_set<T>;
     };
     reverse_iterator rbegin() {
-        return (&finish)->prev_node();
+        return ++reverse_iterator(&finish);
     }
     reverse_iterator rend() {
         return &start;
     }
 
     const_reverse_iterator rbegin() const {
-        return (&finish)->prev_node();
+        return ++const_reverse_iterator(&finish);
     }
 
     const_reverse_iterator rend() const {
@@ -364,7 +364,7 @@ public:
     }
 
     const_reverse_iterator crbegin() const {
-        return (&finish)->prev_node();
+        return ++const_reverse_iterator(&finish);
     }
 
     const_reverse_iterator crend() const {
