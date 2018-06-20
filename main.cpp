@@ -1,6 +1,17 @@
 #include <iostream>
 #include "my_set.h"
+
+int file(int k) {
+    static int p = k;
+    return k;
+}
+
+
 int main() {
+    static int a;
+    int* b = new int(10);
+    delete b;
+    delete a;
     //my_set<int> a, b;
     //a.insert(5);
     my_set<int>::iterator const i = a.find(5);

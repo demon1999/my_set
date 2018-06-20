@@ -5,7 +5,6 @@
 #ifndef MY_SET_MY_SET_H
 #define MY_SET_MY_SET_H
 
-
 #include <cstdio>
 #include <stdexcept>
 #include <queue>
@@ -92,6 +91,9 @@ public:
             we = a;
         }
     public:
+
+        iterator() = default;
+
         bool operator==(const iterator & other) const {
             return we == other.we;
         }
@@ -145,6 +147,7 @@ public:
             we = a;
         }
     public:
+        my_const_iterator() = default;
         my_const_iterator(const iterator & other) {
             we = other.we;
         }
@@ -356,6 +359,7 @@ public:
     }
 
     void clear();
+    void my_deleter(node *q);
     iterator erase(const_iterator we);
 private:
     iterator extract(iterator we);
@@ -427,19 +431,7 @@ my_set<T> &my_set<T>::operator=(my_set const &other) {
 
 template<typename T>
 void my_set<T>::clear() {
-    if (!start.r) return;
-    std::queue<node*> data;
-    data.push(start.r);
-    while (!data.empty()) {
-        auto v = data.front();
-        data.pop();
-        if (v != NULL) {
-            data.push(v->l);
-            data.push(v->r);
-            delete v;
-        }
-    }
-
+    my_deleter(start.r);
     start.r = NULL;
 }
 
@@ -525,15 +517,15 @@ template<typename T>
 typename my_set<T>::iterator my_set<T>::erase(my_set::const_iterator we) {
     if (we == end())
         return const_cast<node*>(we.we);
+    auto ans = upper_bound((*(we.we->data)));
     auto me = extract(const_cast<node*>(we.we));
-    auto ans = upper_bound((*(me.we->data)));
     delete me.we;
     return const_cast<node*>(ans.we);
 }
 
 template<typename T>
 typename my_set<T>::iterator my_set<T>::extract(my_set::iterator we) {
-    if (iterator(we.we) == end()) {
+    if (we == end()) {
         return we;
     }
     auto ans = we;
@@ -586,6 +578,14 @@ typename my_set<T>::iterator my_set<T>::upper_bound(const T &a) {
 template<typename T>
 typename my_set<T>::iterator my_set<T>::find(const T &a) {
     return const_cast<node*>(((const_cast<const my_set*>(this))->find(a)).we);
+}
+
+template<typename T>
+void my_set<T>::my_deleter(my_set::node * q) {
+    if (q == NULL) return;
+    my_deleter(q->l);
+    my_deleter(q->r);
+    delete q;
 }
 
 template<typename T>
